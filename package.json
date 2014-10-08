@@ -11,6 +11,7 @@
     "start": "gulp & nodemon index.js"
   },
   "dependencies": {
+    "animated_gif": "0.0.3",
     "browserify": "^5.9.3",
     "data-uri-to-buffer": "~0.0.3",
     "fingerprintjs": "~0.5.3",

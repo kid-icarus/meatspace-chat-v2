@@ -4,17 +4,20 @@ var Fingerprint = require('fingerprintjs');
 var crypto = require('crypto');
 var music = require('./music');
 var services = require('./services');
+var vid2gif = require('./vid2gif');
 var socket = io();
 
 var rtc = false;
 var webmSupport = false;
 
 var CHAR_LIMIT = 250;
+var NUM_FRAMES = 10;
+var GIF_WORKER_PATH = 'gif-worker.js';
 
 rtc = new Webrtc2images({
   width: 200,
   height: 150,
-  frames: 10,
+  frames: NUM_FRAMES,
   type: 'image/jpeg',
   quality: 0.8,
   interval: 200
@@ -119,6 +122,18 @@ messages.on('click', '.mute', function (ev) {
     localStorage.setItem('muted', JSON.stringify(mutedFP));
     body.find('li[data-fp="' + fp + '"]').remove();
   }
+});
+
+messages.on('click', 'video', function (ev) {
+  vid2gif(this, NUM_FRAMES, GIF_WORKER_PATH, function(err, gifBlob) {
+    if (err) {
+      return console.error('Error creating GIF: ' + gif);
+    }
+
+    // TODO(tec27): do something with the GIF
+    var url = window.URL.createObjectURL(gifBlob);
+    var img = $('<img/>').attr('src', url).appendTo('body');
+  });
 });
 
 doc.on('visibilitychange', function (ev) {
