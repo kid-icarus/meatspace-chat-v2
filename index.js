@@ -44,7 +44,7 @@ server.route({
   path: '/gif-worker.js',
   config: {
     handler: {
-      file: require.resolve('Animated_GIF/dist/Animated_GIF.worker.min.js')
+      file: require.resolve('animated_gif/dist/Animated_GIF.worker.min.js')
     }
   }
 });
